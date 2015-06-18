@@ -1,0 +1,769 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CricketCoachModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BatsmanInnings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="SessionId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Runs" Type="int" Nullable="false" />
+          <Property Name="Balls" Type="int" Nullable="false" />
+          <Property Name="StrikeRate" Type="float" Nullable="false" />
+          <Property Name="DotBalls" Type="int" Nullable="false" />
+          <Property Name="Fours" Type="int" Nullable="false" />
+          <Property Name="Sixes" Type="int" Nullable="false" />
+          <Property Name="Singles" Type="int" Nullable="false" />
+          <Property Name="Doubles" Type="int" Nullable="false" />
+          <Property Name="Threes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="InningsId" Type="int" Nullable="false" />
+          <Property Name="OverId" Type="int" Nullable="false" />
+          <Property Name="Runs" Type="int" Nullable="false" />
+          <Property Name="RunType" Type="int" Nullable="false" />
+          <Property Name="Extra" Type="int" />
+          <Property Name="ShotX" Type="int" />
+          <Property Name="ShotY" Type="int" />
+          <Property Name="DismissalType" Type="int" />
+          <Property Name="FielderId" Type="uniqueidentifier" />
+          <Property Name="ThrowCollectorId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="NetSessionAttendees">
+          <Key>
+            <PropertyRef Name="PlayerId" />
+            <PropertyRef Name="NetSessionId" />
+          </Key>
+          <Property Name="PlayerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NetSessionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NetSessions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RosterId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="OversPerBatsman" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="CountingRuns" Type="bit" Nullable="false" />
+          <Property Name="CountingDismissals" Type="bit" Nullable="false" />
+          <Property Name="RunsBehindWicket" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Overs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="SpellId" Type="int" Nullable="false" />
+          <Property Name="Runs" Type="int" Nullable="false" />
+          <Property Name="Wickets" Type="int" Nullable="false" />
+          <Property Name="Wides" Type="int" Nullable="false" />
+          <Property Name="Byes" Type="int" Nullable="false" />
+          <Property Name="OverStepNoBall" Type="int" Nullable="false" />
+          <Property Name="HeightNoBall" Type="int" Nullable="false" />
+          <Property Name="LegByes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Players">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="20" />
+          <Property Name="Age" Type="int" />
+          <Property Name="WicketKeeper" Type="bit" Nullable="false" />
+          <Property Name="Batsman" Type="bit" Nullable="false" />
+          <Property Name="Bowler" Type="bit" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="35" />
+          <Property Name="PictureUri" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="RosterMemberships">
+          <Key>
+            <PropertyRef Name="RosterId" />
+            <PropertyRef Name="PlayerId" />
+          </Key>
+          <Property Name="RosterId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="PlayerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Captain" Type="bit" Nullable="false" />
+          <Property Name="ViceCaptain" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rosters">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="35" Nullable="false" />
+          <Property Name="PictureUri" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="SpellOvers">
+          <Key>
+            <PropertyRef Name="SpellId" />
+            <PropertyRef Name="OverId" />
+          </Key>
+          <Property Name="SpellId" Type="int" Nullable="false" />
+          <Property Name="OverId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spells">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="BowlerId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Runs" Type="int" Nullable="false" />
+          <Property Name="Wickets" Type="int" Nullable="false" />
+          <Property Name="Wides" Type="int" Nullable="false" />
+          <Property Name="Byes" Type="int" Nullable="false" />
+          <Property Name="OverStepNoBall" Type="int" Nullable="false" />
+          <Property Name="HeightNoBall" Type="int" Nullable="false" />
+          <Property Name="LegByes" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Attendees_NetSessions">
+          <End Role="NetSessions" Type="Self.NetSessions" Multiplicity="1" />
+          <End Role="NetSessionAttendees" Type="Self.NetSessionAttendees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NetSessions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetSessionAttendees">
+              <PropertyRef Name="NetSessionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendees_Players">
+          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="NetSessionAttendees" Type="Self.NetSessionAttendees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetSessionAttendees">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_BatsmanInnings">
+          <End Role="BatsmanInnings" Type="Self.BatsmanInnings" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BatsmanInnings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="InningsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Fielder">
+          <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="FielderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Overs">
+          <End Role="Overs" Type="Self.Overs" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Overs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="OverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_ThrowCollector">
+          <End Role="Players" Type="Self.Players" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="ThrowCollectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NetSessions_Rosters">
+          <End Role="Rosters" Type="Self.Rosters" Multiplicity="1" />
+          <End Role="NetSessions" Type="Self.NetSessions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rosters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetSessions">
+              <PropertyRef Name="RosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RosterMemberships_Players">
+          <End Role="Players" Type="Self.Players" Multiplicity="1" />
+          <End Role="RosterMemberships" Type="Self.RosterMemberships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RosterMemberships">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RosterMemberships_Rosters">
+          <End Role="Rosters" Type="Self.Rosters" Multiplicity="1" />
+          <End Role="RosterMemberships" Type="Self.RosterMemberships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rosters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RosterMemberships">
+              <PropertyRef Name="RosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpellOvers_Overs">
+          <End Role="Overs" Type="Self.Overs" Multiplicity="1" />
+          <End Role="SpellOvers" Type="Self.SpellOvers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Overs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpellOvers">
+              <PropertyRef Name="OverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SpellOvers_Spells">
+          <End Role="Spells" Type="Self.Spells" Multiplicity="1" />
+          <End Role="SpellOvers" Type="Self.SpellOvers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Spells">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SpellOvers">
+              <PropertyRef Name="SpellId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CricketCoachModelStoreContainer">
+          <EntitySet Name="BatsmanInnings" EntityType="Self.BatsmanInnings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deliveries" EntityType="Self.Deliveries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NetSessionAttendees" EntityType="Self.NetSessionAttendees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NetSessions" EntityType="Self.NetSessions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Overs" EntityType="Self.Overs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Players" EntityType="Self.Players" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RosterMemberships" EntityType="Self.RosterMemberships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rosters" EntityType="Self.Rosters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SpellOvers" EntityType="Self.SpellOvers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Spells" EntityType="Self.Spells" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attendees_NetSessions" Association="Self.FK_Attendees_NetSessions">
+            <End Role="NetSessions" EntitySet="NetSessions" />
+            <End Role="NetSessionAttendees" EntitySet="NetSessionAttendees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendees_Players" Association="Self.FK_Attendees_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="NetSessionAttendees" EntitySet="NetSessionAttendees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_BatsmanInnings" Association="Self.FK_Deliveries_BatsmanInnings">
+            <End Role="BatsmanInnings" EntitySet="BatsmanInnings" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Fielder" Association="Self.FK_Deliveries_Fielder">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Overs" Association="Self.FK_Deliveries_Overs">
+            <End Role="Overs" EntitySet="Overs" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_ThrowCollector" Association="Self.FK_Deliveries_ThrowCollector">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NetSessions_Rosters" Association="Self.FK_NetSessions_Rosters">
+            <End Role="Rosters" EntitySet="Rosters" />
+            <End Role="NetSessions" EntitySet="NetSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RosterMemberships_Players" Association="Self.FK_RosterMemberships_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="RosterMemberships" EntitySet="RosterMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RosterMemberships_Rosters" Association="Self.FK_RosterMemberships_Rosters">
+            <End Role="Rosters" EntitySet="Rosters" />
+            <End Role="RosterMemberships" EntitySet="RosterMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpellOvers_Overs" Association="Self.FK_SpellOvers_Overs">
+            <End Role="Overs" EntitySet="Overs" />
+            <End Role="SpellOvers" EntitySet="SpellOvers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SpellOvers_Spells" Association="Self.FK_SpellOvers_Spells">
+            <End Role="Spells" EntitySet="Spells" />
+            <End Role="SpellOvers" EntitySet="SpellOvers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CricketCoachModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BatsmanInning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SessionId" Type="Guid" Nullable="false" />
+          <Property Name="Runs" Type="Int32" Nullable="false" />
+          <Property Name="Balls" Type="Int32" Nullable="false" />
+          <Property Name="StrikeRate" Type="Double" Nullable="false" />
+          <Property Name="DotBalls" Type="Int32" Nullable="false" />
+          <Property Name="Fours" Type="Int32" Nullable="false" />
+          <Property Name="Sixes" Type="Int32" Nullable="false" />
+          <Property Name="Singles" Type="Int32" Nullable="false" />
+          <Property Name="Doubles" Type="Int32" Nullable="false" />
+          <Property Name="Threes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_BatsmanInnings" FromRole="BatsmanInnings" ToRole="Deliveries" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="InningsId" Type="Int32" Nullable="false" />
+          <Property Name="OverId" Type="Int32" Nullable="false" />
+          <Property Name="Runs" Type="Int32" Nullable="false" />
+          <Property Name="Extra" Type="CricketCoachModel.Extra" />
+          <Property Name="ShotX" Type="Int32" />
+          <Property Name="ShotY" Type="Int32" />
+          <Property Name="DismissalType" Type="CricketCoachModel.DismissalType" />
+          <Property Name="FielderId" Type="Guid" />
+          <Property Name="ThrowCollectorId" Type="Guid" />
+          <NavigationProperty Name="BatsmanInning" Relationship="Self.FK_Deliveries_BatsmanInnings" FromRole="Deliveries" ToRole="BatsmanInnings" />
+          <NavigationProperty Name="Over" Relationship="Self.FK_Deliveries_Overs" FromRole="Deliveries" ToRole="Overs" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="RunType" Type="CricketCoachModel.RunType" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NetSession">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RosterId" Type="Guid" Nullable="false" />
+          <Property Name="OversPerBatsman" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="CountingRuns" Type="Boolean" Nullable="false" />
+          <Property Name="CountingDismissals" Type="Boolean" Nullable="false" />
+          <Property Name="RunsBehindWicket" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Roster" Relationship="Self.FK_NetSessions_Rosters" FromRole="NetSessions" ToRole="Rosters" />
+          <NavigationProperty Name="Players" Relationship="Self.NetSessionAttendees" FromRole="NetSessions" ToRole="Players" />
+        </EntityType>
+        <EntityType Name="Over">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SpellId" Type="Int32" Nullable="false" />
+          <Property Name="Runs" Type="Int32" Nullable="false" />
+          <Property Name="Wickets" Type="Int32" Nullable="false" />
+          <Property Name="Wides" Type="Int32" Nullable="false" />
+          <Property Name="Byes" Type="Int32" Nullable="false" />
+          <Property Name="OverStepNoBall" Type="Int32" Nullable="false" />
+          <Property Name="HeightNoBall" Type="Int32" Nullable="false" />
+          <Property Name="LegByes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Overs" FromRole="Overs" ToRole="Deliveries" />
+          <NavigationProperty Name="Spells" Relationship="Self.SpellOvers" FromRole="Overs" ToRole="Spells" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="WicketKeeper" Type="Boolean" Nullable="false" />
+          <Property Name="Batsman" Type="Boolean" Nullable="false" />
+          <Property Name="Bowler" Type="Boolean" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+          <Property Name="PictureUri" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RosterMemberships" Relationship="Self.FK_RosterMemberships_Players" FromRole="Players" ToRole="RosterMemberships" />
+          <NavigationProperty Name="NetSessions" Relationship="Self.NetSessionAttendees" FromRole="Players" ToRole="NetSessions" />
+        </EntityType>
+        <EntityType Name="RosterMembership">
+          <Key>
+            <PropertyRef Name="RosterId" />
+            <PropertyRef Name="PlayerId" />
+          </Key>
+          <Property Name="RosterId" Type="Guid" Nullable="false" />
+          <Property Name="PlayerId" Type="Guid" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Captain" Type="Boolean" Nullable="false" />
+          <Property Name="ViceCaptain" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Player" Relationship="Self.FK_RosterMemberships_Players" FromRole="RosterMemberships" ToRole="Players" />
+          <NavigationProperty Name="Roster" Relationship="Self.FK_RosterMemberships_Rosters" FromRole="RosterMemberships" ToRole="Rosters" />
+        </EntityType>
+        <EntityType Name="Roster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PictureUri" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NetSessions" Relationship="Self.FK_NetSessions_Rosters" FromRole="Rosters" ToRole="NetSessions" />
+          <NavigationProperty Name="RosterMemberships" Relationship="Self.FK_RosterMemberships_Rosters" FromRole="Rosters" ToRole="RosterMemberships" />
+        </EntityType>
+        <EntityType Name="Spell">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="BowlerId" Type="Guid" Nullable="false" />
+          <Property Name="Runs" Type="Int32" Nullable="false" />
+          <Property Name="Wickets" Type="Int32" Nullable="false" />
+          <Property Name="Wides" Type="Int32" Nullable="false" />
+          <Property Name="Byes" Type="Int32" Nullable="false" />
+          <Property Name="OverStepNoBall" Type="Int32" Nullable="false" />
+          <Property Name="HeightNoBall" Type="Int32" Nullable="false" />
+          <Property Name="LegByes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Overs" Relationship="Self.SpellOvers" FromRole="Spells" ToRole="Overs" />
+        </EntityType>
+        <Association Name="FK_Deliveries_BatsmanInnings">
+          <End Role="BatsmanInnings" Type="Self.BatsmanInning" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BatsmanInnings">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="InningsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Fielder">
+          <End Role="Players" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="FielderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Overs">
+          <End Role="Overs" Type="Self.Over" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Overs">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="OverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_ThrowCollector">
+          <End Role="Players" Type="Self.Player" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="ThrowCollectorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NetSessions_Rosters">
+          <End Role="Rosters" Type="Self.Roster" Multiplicity="1" />
+          <End Role="NetSessions" Type="Self.NetSession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rosters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NetSessions">
+              <PropertyRef Name="RosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RosterMemberships_Players">
+          <End Role="Players" Type="Self.Player" Multiplicity="1" />
+          <End Role="RosterMemberships" Type="Self.RosterMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Players">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RosterMemberships">
+              <PropertyRef Name="PlayerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RosterMemberships_Rosters">
+          <End Role="Rosters" Type="Self.Roster" Multiplicity="1" />
+          <End Role="RosterMemberships" Type="Self.RosterMembership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rosters">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RosterMemberships">
+              <PropertyRef Name="RosterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NetSessionAttendees">
+          <End Role="NetSessions" Type="Self.NetSession" Multiplicity="*" />
+          <End Role="Players" Type="Self.Player" Multiplicity="*" />
+        </Association>
+        <Association Name="SpellOvers">
+          <End Role="Overs" Type="Self.Over" Multiplicity="*" />
+          <End Role="Spells" Type="Self.Spell" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CricketCoachEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BatsmanInnings" EntityType="Self.BatsmanInning" />
+          <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
+          <EntitySet Name="NetSessions" EntityType="Self.NetSession" />
+          <EntitySet Name="Overs" EntityType="Self.Over" />
+          <EntitySet Name="Players" EntityType="Self.Player" />
+          <EntitySet Name="RosterMemberships" EntityType="Self.RosterMembership" />
+          <EntitySet Name="Rosters" EntityType="Self.Roster" />
+          <EntitySet Name="Spells" EntityType="Self.Spell" />
+          <AssociationSet Name="FK_Deliveries_BatsmanInnings" Association="Self.FK_Deliveries_BatsmanInnings">
+            <End Role="BatsmanInnings" EntitySet="BatsmanInnings" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Fielder" Association="Self.FK_Deliveries_Fielder">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Overs" Association="Self.FK_Deliveries_Overs">
+            <End Role="Overs" EntitySet="Overs" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_ThrowCollector" Association="Self.FK_Deliveries_ThrowCollector">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NetSessions_Rosters" Association="Self.FK_NetSessions_Rosters">
+            <End Role="Rosters" EntitySet="Rosters" />
+            <End Role="NetSessions" EntitySet="NetSessions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RosterMemberships_Players" Association="Self.FK_RosterMemberships_Players">
+            <End Role="Players" EntitySet="Players" />
+            <End Role="RosterMemberships" EntitySet="RosterMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RosterMemberships_Rosters" Association="Self.FK_RosterMemberships_Rosters">
+            <End Role="Rosters" EntitySet="Rosters" />
+            <End Role="RosterMemberships" EntitySet="RosterMemberships" />
+          </AssociationSet>
+          <AssociationSet Name="NetSessionAttendees" Association="Self.NetSessionAttendees">
+            <End Role="NetSessions" EntitySet="NetSessions" />
+            <End Role="Players" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="SpellOvers" Association="Self.SpellOvers">
+            <End Role="Overs" EntitySet="Overs" />
+            <End Role="Spells" EntitySet="Spells" />
+          </AssociationSet>
+        </EntityContainer>
+        <EnumType Name="DismissalType">
+          <Member Name="Bold" />
+          <Member Name="Caught" />
+          <Member Name="CaughtAndBold" />
+          <Member Name="Runout" />
+          <Member Name="Stumped" />
+          <Member Name="HitWicket" />
+        </EnumType>
+        <EnumType Name="Extra">
+          <Member Name="Wide" />
+          <Member Name="FootNoBall" />
+          <Member Name="WaistNoBall" />
+          <Member Name="None" />
+        </EnumType>
+        <EnumType Name="RunType">
+          <Member Name="OffTheBat" />
+          <Member Name="LegBye" />
+          <Member Name="Bye" />
+        </EnumType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CricketCoachModelStoreContainer" CdmEntityContainer="CricketCoachEntities">
+          <EntitySetMapping Name="BatsmanInnings">
+            <EntityTypeMapping TypeName="CricketCoachModel.BatsmanInning">
+              <MappingFragment StoreEntitySet="BatsmanInnings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+                <ScalarProperty Name="Runs" ColumnName="Runs" />
+                <ScalarProperty Name="Balls" ColumnName="Balls" />
+                <ScalarProperty Name="StrikeRate" ColumnName="StrikeRate" />
+                <ScalarProperty Name="DotBalls" ColumnName="DotBalls" />
+                <ScalarProperty Name="Fours" ColumnName="Fours" />
+                <ScalarProperty Name="Sixes" ColumnName="Sixes" />
+                <ScalarProperty Name="Singles" ColumnName="Singles" />
+                <ScalarProperty Name="Doubles" ColumnName="Doubles" />
+                <ScalarProperty Name="Threes" ColumnName="Threes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="CricketCoachModel.Delivery">
+              <MappingFragment StoreEntitySet="Deliveries">
+                <ScalarProperty Name="RunType" ColumnName="RunType" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="InningsId" ColumnName="InningsId" />
+                <ScalarProperty Name="OverId" ColumnName="OverId" />
+                <ScalarProperty Name="Runs" ColumnName="Runs" />
+                <ScalarProperty Name="Extra" ColumnName="Extra" />
+                <ScalarProperty Name="ShotX" ColumnName="ShotX" />
+                <ScalarProperty Name="ShotY" ColumnName="ShotY" />
+                <ScalarProperty Name="DismissalType" ColumnName="DismissalType" />
+                <ScalarProperty Name="FielderId" ColumnName="FielderId" />
+                <ScalarProperty Name="ThrowCollectorId" ColumnName="ThrowCollectorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NetSessions">
+            <EntityTypeMapping TypeName="CricketCoachModel.NetSession">
+              <MappingFragment StoreEntitySet="NetSessions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RosterId" ColumnName="RosterId" />
+                <ScalarProperty Name="OversPerBatsman" ColumnName="OversPerBatsman" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="CountingRuns" ColumnName="CountingRuns" />
+                <ScalarProperty Name="CountingDismissals" ColumnName="CountingDismissals" />
+                <ScalarProperty Name="RunsBehindWicket" ColumnName="RunsBehindWicket" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Overs">
+            <EntityTypeMapping TypeName="CricketCoachModel.Over">
+              <MappingFragment StoreEntitySet="Overs">
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SpellId" ColumnName="SpellId" />
+                <ScalarProperty Name="Runs" ColumnName="Runs" />
+                <ScalarProperty Name="Wickets" ColumnName="Wickets" />
+                <ScalarProperty Name="Wides" ColumnName="Wides" />
+                <ScalarProperty Name="Byes" ColumnName="Byes" />
+                <ScalarProperty Name="OverStepNoBall" ColumnName="OverStepNoBall" />
+                <ScalarProperty Name="HeightNoBall" ColumnName="HeightNoBall" />
+                <ScalarProperty Name="LegByes" ColumnName="LegByes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Players">
+            <EntityTypeMapping TypeName="CricketCoachModel.Player">
+              <MappingFragment StoreEntitySet="Players">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="WicketKeeper" ColumnName="WicketKeeper" />
+                <ScalarProperty Name="Batsman" ColumnName="Batsman" />
+                <ScalarProperty Name="Bowler" ColumnName="Bowler" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PictureUri" ColumnName="PictureUri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RosterMemberships">
+            <EntityTypeMapping TypeName="CricketCoachModel.RosterMembership">
+              <MappingFragment StoreEntitySet="RosterMemberships">
+                <ScalarProperty Name="RosterId" ColumnName="RosterId" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Captain" ColumnName="Captain" />
+                <ScalarProperty Name="ViceCaptain" ColumnName="ViceCaptain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rosters">
+            <EntityTypeMapping TypeName="CricketCoachModel.Roster">
+              <MappingFragment StoreEntitySet="Rosters">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PictureUri" ColumnName="PictureUri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spells">
+            <EntityTypeMapping TypeName="CricketCoachModel.Spell">
+              <MappingFragment StoreEntitySet="Spells">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BowlerId" ColumnName="BowlerId" />
+                <ScalarProperty Name="Runs" ColumnName="Runs" />
+                <ScalarProperty Name="Wickets" ColumnName="Wickets" />
+                <ScalarProperty Name="Wides" ColumnName="Wides" />
+                <ScalarProperty Name="Byes" ColumnName="Byes" />
+                <ScalarProperty Name="OverStepNoBall" ColumnName="OverStepNoBall" />
+                <ScalarProperty Name="HeightNoBall" ColumnName="HeightNoBall" />
+                <ScalarProperty Name="LegByes" ColumnName="LegByes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="NetSessionAttendees" TypeName="CricketCoachModel.NetSessionAttendees" StoreEntitySet="NetSessionAttendees">
+            <EndProperty Name="NetSessions">
+              <ScalarProperty Name="Id" ColumnName="NetSessionId" />
+            </EndProperty>
+            <EndProperty Name="Players">
+              <ScalarProperty Name="Id" ColumnName="PlayerId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SpellOvers" TypeName="CricketCoachModel.SpellOvers" StoreEntitySet="SpellOvers">
+            <EndProperty Name="Overs">
+              <ScalarProperty Name="Id" ColumnName="OverId" />
+            </EndProperty>
+            <EndProperty Name="Spells">
+              <ScalarProperty Name="Id" ColumnName="SpellId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

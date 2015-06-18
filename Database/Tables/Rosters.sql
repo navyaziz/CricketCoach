@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Rosters]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Name] VARCHAR(35) NOT NULL, 
+    [PictureUri] VARCHAR(100) NULL
+)
